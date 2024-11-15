@@ -50,14 +50,11 @@ class CLI:
                 self.db.delete_habit(name)
                 print(f"Successfully deleted the habit '{name}'.")
 
-            elif choice == "3":
+             elif choice == "3":
                  name = input("Enter the name of the habit completed today: ").strip()
-                 habit_objects = self.habit_ins.get_habit_objects()
-                 if habit_objects is None:
-                     habit_objects = []
-                 habit = next((habit for habit in habit_objects if habit.name == name), None)
                  self.habit_ins.habit_is_done_today(name)
                  print(f"Successfully marked {name} as completed today.")
+
 
             elif choice == "4":
                 name = input("Enter the name of the habit to view its streak: ").strip()
