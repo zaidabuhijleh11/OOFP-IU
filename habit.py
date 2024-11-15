@@ -139,4 +139,3 @@ Args:
                         streak_history.append(len( consecutive_dates))
                         consecutive_dates = [dates[x]]
                 return max(streak_history) if streak_history else 0
-
