@@ -40,7 +40,7 @@ class HabitDB:
     """
 
     def __init__(self ):
-        self.connection = sqlite3.connect("../.idea/OOP project/habitDB.db")
+        self.connection = sqlite3.connect("habitDB.db")
 
 
 
