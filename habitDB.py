@@ -220,6 +220,7 @@ class HabitDB:
         Return :
          (str) description of the habit """
         with self.connection as connection:
+            cursor = connection.cursor()
             if name is  None:
                 raise ValueError("Name cannot be None or empty")
             if self.habit_exists(name) is False:
@@ -237,6 +238,7 @@ class HabitDB:
             Return :
                  (str) description of the habit """
         with self.connection as connection:
+            cursor = connection.cursor()
             if name is  None:
                 raise ValueError("Name cannot be None or empty")
             if self.habit_exists(name) is False:
@@ -370,6 +372,7 @@ class HabitDB:
             duration = duration_[0]
             if duration:
                 curr_streak, broken_count   = habit.streak_calculations()
+
                 if curr_streak < duration:
                     cursor.execute(""" UPDATE habits SET streak = ? WHERE name = ? """, (curr_streak, name))
                     connection.commit()
