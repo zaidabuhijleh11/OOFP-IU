@@ -1,0 +1,4 @@
+python==3.12
+pytest==8.3.3
+datetime==5.5
+sqlite3==3.45.1
