@@ -72,8 +72,9 @@ Args:
             if today  in self.completed_dates:
                 raise ValueError("Date is duplicated")
             self.completed_dates.append(today)
+            print(self.completed_dates)
 
-    def streak_calculations(self) -> tuple[int , int ]:
+    def streak_calculations(self) -> tuple[int , int]:
         """
         Calculate the streak of a habit based on completed dates.
 
@@ -93,7 +94,7 @@ Args:
             broken_count += 1 and set streak = 0. The same goes for the weekly period, but the difference == 7."""
         dates = self.completed_dates
         broken_count = 0
-        curr_streak = 0
+        curr_streak = 1 if len(dates) == 1 else 0
         for x in range(1, len(dates)):
             difference = (dates[x] - dates[x - 1]).days
             if self.period == "daily" :
@@ -138,3 +139,4 @@ Args:
                         streak_history.append(len( consecutive_dates))
                         consecutive_dates = [dates[x]]
                 return max(streak_history) if streak_history else 0
+
