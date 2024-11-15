@@ -123,8 +123,7 @@ def report(db: HabitDB, consistency: int, inconsistency: int) -> dict:
         'most struggled habit': get_most_struggled_habits(db, inconsistency),
         'daily habits': get_daily_habits(db),
         'weekly habits': get_weekly_habits(db),
-        'over all completion rate ': calculate_completion_rate(db)
-    }
+        'over all completion rate ': calculate_completion_rate(db)}
 
 
 def visualization_performance_for_a_habit(db: HabitDB):
