@@ -41,9 +41,7 @@ class HabitDB:
 
     def __init__(self ):
         self.connection = sqlite3.connect("habitDB.db")
-
-
-
+        self.habit= Habit(name='zaid',period='daily',description='testing',streak=0 ,broken_count=0 , status='incomplete' , created_at= datetime.now().date(), duration=100 , day_week="day" )
 
     def habit_exists(self, name: str) -> bool:# it's implemented to avoid redundancy
         """  a helper method to check if habit exists in the table
@@ -260,7 +258,8 @@ class HabitDB:
             cursor = connection.cursor()
             cursor.execute(""" SELECT * FROM habits""")
             habits = cursor.fetchall()
-            return habits if habits else []
+
+            return habits[:10] if habits else []
 
     def delete_all_habits(self) -> None:
         """deletes all habits and records from Table """
@@ -269,9 +268,10 @@ class HabitDB:
             cursor.execute("DELETE FROM habits")
             connection.commit()
 
-    def update_description(self, habit: Habit, new_desc: str, name: str) -> None:
+    def update_description(self, name: str,new_desc: str) -> None:
         """ Update the description of a habit
         Args:
+
            new_desc : the new description
            name : name of the habit
         Raises:
@@ -280,8 +280,7 @@ class HabitDB:
             ValueError if the habit does not exist
         Return :
            returns nothing only updates value in the table
-
-        note * it updates the attribute too """
+"""
 
         with self.connection as connection:
             cursor = connection.cursor()
@@ -292,14 +291,14 @@ class HabitDB:
             if new_desc is None:
                 raise ValueError("New description is invalid")
             cursor.execute("UPDATE habits SET description = ? WHERE name = ?", (new_desc, name))
-            habit.description = new_desc
             connection.commit()
 
 
 
-    def update_period(self, habit: Habit, name, duration: int = None, day_week: str = None) -> None:
+    def update_period(self,  name:str, duration: int, day_week: str ) -> None:
         """ update the period of a habit
         Args :
+
            name: of th habit
            duration: the duration of the habit
            day_week: unit of measuring the duration in days or weeks
@@ -327,22 +326,19 @@ class HabitDB:
                 raise ValueError("duration cant be None please provide a duration")
             if day_week is None:
                 raise ValueError("day_week cant be None please provide a day_week")
-
-
             cursor.execute(""" SELECT period FROM habits WHERE name= ? """, (name,))
             period = cursor.fetchone()
             period_ = period[0] if period else None
             if period_ == "daily":
                 cursor.execute("""UPDATE habits SET period = 'weekly', duration =? ,day_week = ? WHERE name = ? """, (day_week, duration, name))
-                habit.period = 'weekly'
                 connection.commit()
             elif period_ == "weekly":
                 cursor.execute("""UPDATE habits SET period = 'daily', duration =?, day_week = ? WHERE name = ? """,(duration, day_week, name))
-                habit.period = 'daily'
+
                 connection.commit()
 
 
-    def update_status_streak(self,habit:Habit ,  name: str) -> None:
+    def update_status_streak(self,  name: str) -> None:
         """ Update the streak , broken_count and possibly the status
 
         Arg:
@@ -360,9 +356,9 @@ class HabitDB:
             as long as the streak is less than the duration update the table
             column streak with this streak if streak == duration tha habit is completed
             and if the broken count is more than the original broken count set streak to 0 and assign the new broken count """
-
         with self.connection as connection:
             cursor = connection.cursor()
+            curr_streak, broken_count = self.habit.streak_calculations(name)
             if name is None:
                 raise ValueError("Name cannot be None or empty")
             if self.habit_exists(name) is False:
@@ -371,16 +367,12 @@ class HabitDB:
             duration_ = cursor.fetchone()
             duration = duration_[0]
             if duration:
-                curr_streak, broken_count   = habit.streak_calculations()
-
                 if curr_streak < duration:
                     cursor.execute(""" UPDATE habits SET streak = ? WHERE name = ? """, (curr_streak, name))
                     connection.commit()
                 elif curr_streak == duration:
-                    cursor.execute(""" UPDATE habits SET status = ? WHERE name = ? """, ("completed", name))
-                    habit.status = 'completed'
+                    cursor.execute(""" UPDATE habits SET status = ?  ,streak = ? WHERE name = ? """, ("completed",int(duration), name))
                     connection.commit()
-                elif broken_count > self.get_broken_count(name):
-                    habit.broken_count = broken_count
+                if broken_count > self.get_broken_count(name):
                     cursor.execute(""" UPDATE habits SET streak = 0 ,broken_count= ? WHERE name = ?""", (broken_count, name))
                     connection.commit()
