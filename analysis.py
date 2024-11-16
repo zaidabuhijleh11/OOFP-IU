@@ -83,6 +83,7 @@ def get_daily_habits(db: HabitDB) -> list:
          a list of habits with period of daily"""
     habits_data = db.get_habits()
     habits = [Habit(*habit) for habit in habits_data if Habit(*habit).period.strip() == 'daily']
+
     return list(map(lambda habit: habit.name, habits))
 
 
@@ -116,7 +117,16 @@ def calculate_completion_rate(db: HabitDB) -> str:
 
 
 def report(db: HabitDB, consistency: int, inconsistency: int) -> dict:
-    """Generate a habit progress report"""
+    """Generate a habit progress report
+    Args:
+       db: HabitDB instance
+       consistency: a consistency thershold 
+       inconsistency : inconsistency thershold 
+    Raises: 
+        None 
+    Return : 
+       dict
+       """
     return {
         "all habits": db.get_habits(),
         'most consistent habit': get_most_consistent_habits(db, consistency),
