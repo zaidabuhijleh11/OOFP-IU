@@ -2,6 +2,7 @@ from datetime import datetime
 from habit import Habit
 from habitDB import HabitDB
 from analysis import get_most_consistent_habits, get_most_struggled_habits, get_daily_habits, get_weekly_habits , calculate_completion_rate , visualization_performance_for_a_habit,report
+from Dates_Persistence import load_dates ,save_dates
 class CLI:
     def __init__(self):
         self.db = HabitDB()
@@ -33,7 +34,8 @@ class CLI:
             print("21. View weekly habits")
             print("22. View daily habits")
             print("23. Generate a progress report")
-            print("24. Exit")
+            print("24. completed dates of a habit ")
+            print("25.exit")
             choice = input("Choose an option: ").strip()
 
             if choice == "1":
@@ -50,11 +52,10 @@ class CLI:
                 self.db.delete_habit(name)
                 print(f"Successfully deleted the habit '{name}'.")
 
-             elif choice == "3":
+            elif choice == "3":
                  name = input("Enter the name of the habit completed today: ").strip()
                  self.habit_ins.habit_is_done_today(name)
                  print(f"Successfully marked {name} as completed today.")
-
 
             elif choice == "4":
                 name = input("Enter the name of the habit to view its streak: ").strip()
@@ -99,19 +100,19 @@ class CLI:
                 name = input("Enter the name of the habit to update its period: ").strip()
                 duration = int(input("Enter the new duration: "))
                 day_week = input("Enter 'day' or 'week': ").strip()
-                self.db.update_period(self.habit_ins, name ,duration, day_week)
+                self.db.update_period( name ,duration, day_week)
                 print(f"Successfully updated the period for '{name}'.")
 
             elif choice == "14":
                 name = input("Enter the name of the habit to update its description: ").strip()
                 new_desc = input("Enter the new description: ").strip()
-                self.db.update_description(self.habit_ins, new_desc, name)
+                self.db.update_description( new_desc, name)
                 print(f"Successfully updated the description for '{name}'.")
 
             elif choice == "15":
                 name = input("Enter the name of the habit to update its streak and status: ").strip()
 
-                self.db.update_status_streak(self.habit_ins, name)
+                self.db.update_status_streak(name)
                 print(f"Successfully updated the streak and status for '{name}'.")
 
             elif choice == "16":
@@ -150,8 +151,13 @@ class CLI:
                 inconsistency = int(input("how many broken counts to consider a habit is inconsistent: "))
                 print(f"OverView Report:{report(self.db , consistency,inconsistency)}")
 
+            elif choice=='24':
+                name = input("enter a name:")
+                if self.db.habit_exists(name):
+                    print(f"Completed dates of {name}:{load_dates(name)}")
 
-            elif choice == "24":
+
+            elif choice == "25":
                 print("Exiting...")
                 break
 
