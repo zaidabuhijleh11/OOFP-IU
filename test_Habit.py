@@ -1,16 +1,10 @@
-from datetime import datetime, date
+from datetime import datetime
 import pytest
 from habitDB import HabitDB
 from habit import Habit
-
-
+from Dates_Persistence import save_dates , load_dates
+import pickle
 class TestHabit:
-
-    @pytest.fixture
-    def test_habit(self):
-
-        test_habit = Habit(name='abd',period='daily',description='testing',streak=0 ,broken_count=0 , status='incomplete' , created_at= datetime.now().date(), duration=100 , day_week="day" )
-        return test_habit
 
     @pytest.fixture
     def test_habit1(self):
@@ -23,46 +17,61 @@ class TestHabit:
 
     @pytest.fixture(autouse=True)
     def clean_db(self , db ):
+        db.delete_all_habits()
         yield
         db.delete_all_habits()
+    @pytest.fixture(autouse=True)
+    def clean_pickle_files(self):
+        with open('zaid_dates.pkl', 'wb') as file:
+            pickle.dump([], file)
 
-
-
-    def test_habit_is_done_today(self, db,test_habit1  ):
-
+    def test_habit_is_done_today(self, db, test_habit1):
+        db.delete_all_habits()
         db.create_habit(name=test_habit1.name, period='daily', description='testing', duration=10, day_week='day')
-        test_habit1.get_habit_objects()
         test_habit1.habit_is_done_today(test_habit1.name)
-
-        assert datetime.now().date() in test_habit1.completed_dates
+        assert datetime.now().date() in load_dates(test_habit1.name)
 
     def test_streak_calculation(self, test_habit1 , db ):
 
         db.create_habit(name=test_habit1.name, period='daily', description='testing', duration=10, day_week='day')
-        test_habit1.completed_dates = [date(2024, 10, 28), date(2024, 10, 29), date(2024, 10, 30),
-                                       date(2024, 10, 31), date(2024, 11, 1), date(2024, 11, 2)]
-        curr_streak, broken_count = test_habit1.streak_calculations()
+        save_dates(test_habit1.name, datetime(2024, 11, 1).date())
+        save_dates(test_habit1.name, datetime(2024, 11, 2).date())
+        save_dates(test_habit1.name, datetime(2024, 11, 3).date())
+        save_dates(test_habit1.name, datetime(2024, 11, 4).date())
+        save_dates(test_habit1.name, datetime(2024, 11, 5).date())
+        save_dates(test_habit1.name, datetime(2024, 11, 6).date())
+        curr_streak, broken_count = test_habit1.streak_calculations(test_habit1.name)
         assert curr_streak == 5
         assert broken_count == 0
 
 
-    def test_longest_run_streak_for_a_given_habit(self, test_habit, db):
-
-        db.create_habit(name=test_habit.name, period=test_habit.period, description=test_habit.description, duration=100, day_week='day')
-        test_habit.get_habit_objects()
-        test_habit.completed_dates = [
-            date(2024, 10, 1), date(2024, 10, 2), date(2024, 10, 3),
-            date(2024, 10, 4), date(2024, 10, 5), date(2024, 10, 6),
-            date(2024, 10, 7), date(2024, 10, 8), date(2024, 10, 9),
-            date(2024, 10, 10), date(2024, 10, 11), date(2024, 10, 12),
-            date(2024, 10, 13), date(2024, 10, 15),
-            date(2024, 10, 16), date(2024, 10, 17), date(2024, 10, 18),
-            date(2024, 10, 19), date(2024, 10, 20), date(2024, 10, 21),
-            date(2024, 10, 22), date(2024, 10, 23),
-            date(2024, 10, 25), date(2024, 10, 27),
-            date(2024, 10, 28), date(2024, 10, 30),
-            date(2024, 10, 31)]
+    def test_streak_cal_for_broken_count(self , test_habit1 , db ):
+        db.create_habit(name=test_habit1.name, period='daily', description='testing', duration=10, day_week='day')
+        save_dates(test_habit1.name, datetime(2024, 11, 1).date())
+        save_dates(test_habit1.name, datetime(2024, 11, 2).date())
+        save_dates(test_habit1.name, datetime(2024, 11, 4).date())
+        save_dates(test_habit1.name, datetime(2024, 11, 6).date())
+        curr_streak, broken_count = test_habit1.streak_calculations(test_habit1.name)
+        assert broken_count ==2
 
 
-        ex_outcome = test_habit.longest_run_streak_for_a_given_habit(test_habit.name)
-        assert ex_outcome == 12
+
+
+
+    def test_longest_run_streak_for_a_given_habit(self, test_habit1, db):
+        db.create_habit(name=test_habit1.name, period=test_habit1.period, description=test_habit1.description, duration=100, day_week='day')
+        save_dates(test_habit1.name, datetime(2024, 10, 1).date())
+        save_dates(test_habit1.name, datetime(2024, 10, 2).date())
+        save_dates(test_habit1.name, datetime(2024, 10, 3).date())
+        save_dates(test_habit1.name, datetime(2024, 10, 4).date())
+        save_dates(test_habit1.name, datetime(2024, 10, 5).date())
+        save_dates(test_habit1.name, datetime(2024, 10, 6).date())
+        save_dates(test_habit1.name, datetime(2024, 10, 7).date())
+        save_dates(test_habit1.name, datetime(2024, 10, 8).date())
+        save_dates(test_habit1.name, datetime(2024, 10, 10).date())
+        save_dates(test_habit1.name, datetime(2024, 10, 11).date())
+        save_dates(test_habit1.name, datetime(2024, 10, 12).date())
+        save_dates(test_habit1.name, datetime(2024, 10, 13).date())
+        save_dates(test_habit1.name, datetime(2024, 10, 15).date())
+        ex_outcome = test_habit1.longest_run_streak_for_a_given_habit(test_habit1.name)
+        assert ex_outcome == 7
