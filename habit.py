@@ -4,14 +4,10 @@ class Habit:
     """
     Represents a Class for Habit Management and Important Calculations.
     Methods:
-        get_habit_objects(): Converts habit data into Habit objects.
         habit_is_done_today(): Appends the date when the user has completed their habit today.
         streak_calculations(): Calculates the streak of a habit and the broken streak count.
-        longest_streak_run_for_a_given_habit(): Calculates the longest streak run for a given habit.
-    """
-
+        longest_streak_run_for_a_given_habit(): Calculates the longest streak run for a given habit."""
     def __init__(self, name: str, period: str, description: str, streak: int, broken_count: int, status: str,created_at, duration: int = None, day_week: str = None):
-
         """
         Args:
             name (str): Name of the habit.
@@ -29,29 +25,12 @@ class Habit:
         self.broken_count = broken_count
         self.status = status
         self.created_at = created_at
-        self.habits = []  # habit objects
 
 
-    def get_habit_objects(self) -> None:
-        """
-        Converts habits created in the DB to Habit objects.
-        Args:
-            None
-        Raises:
-            None
-        Description:
-            Converts habits created in the HabitDB class into Habit objects.
-        """
-        from habitDB import HabitDB
-        db = HabitDB()
-        habits = [Habit(*data) for data in db.get_habits()]  # Convert each tuple of habit data into a Habit object
-        for habit in habits:
-            if habit not in self.habits:
-                self.habits.append(habit)
+
 
     def habit_is_done_today(self, name: str = None) -> None:
-        """
-        Append the date of the day if the user has completed their habit.
+        """Append the date of the day if the user has completed their habit.
         Args:
             name (str): Name of the habit.
         Raises:
@@ -61,8 +40,7 @@ class Habit:
             None: This method just appends the date of the day to `self.completed_dates`.
         Description:
             After validating that the name is provided and exists, the current date is appended to the list of completed dates,
-            after checking that the date does not exist.
-        """
+            after checking that the date does not exist."""
         from habitDB import HabitDB
         db = HabitDB()
         if name is None:
@@ -74,8 +52,7 @@ class Habit:
              save_dates(name, date=today)
 
     def streak_calculations(self, name: str) -> tuple[int, int]:
-        """
-        Calculate the streak of a habit based on completed dates.
+        """Calculate the streak of a habit based on completed dates.
         Args:
             name: name of the habit
         Raises:
@@ -85,8 +62,7 @@ class Habit:
         Description of the method :
             We validate the name of the habit and after that we call to get the completed dates to do streak and broken count calculations
             this is done by looping over the date and checking if they are consecutive if they are we +1 to the streak and if the dates are not
-            we set streak to 0 and broken count +1
-        """
+            we set streak to 0 and broken count +1"""
         if name is None:
             raise ValueError("name is not provided ")
         dates = sorted(load_dates(name))
@@ -106,7 +82,6 @@ class Habit:
                 else:
                     broken_count += 1
                     curr_streak = 0
-
         return curr_streak, broken_count
 
     def longest_run_streak_for_a_given_habit(self, name: str) -> int:
@@ -139,3 +114,6 @@ class Habit:
                     streak_history.append(len(consecutive_dates))
                     consecutive_dates = [dates[x]]
             return max(streak_history) if streak_history else 0
+
+
+
