@@ -75,3 +75,4 @@ class TestHabit:
         save_dates(test_habit1.name, datetime(2024, 10, 15).date())
         ex_outcome = test_habit1.longest_run_streak_for_a_given_habit(test_habit1.name)
         assert ex_outcome == 7
+
