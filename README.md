@@ -25,6 +25,8 @@ Installation:
 git clone https://github.com/zaidabuhijleh11/OOFP-IU.git
 Requirmnest:
 pip install -r requirements.txt
+
+
 to use the app 
 python cli.py
 you can have up to 25 cmmand to to run 
