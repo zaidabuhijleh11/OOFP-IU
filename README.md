@@ -10,6 +10,8 @@ Providing the ability to visualize and review habit progress.
 
 
 Project Structure
+Dates_Presistance
+using pickle we will save completed dates as dattime objects inside of the files and load them as objects too
 Habit Class
 The Habit class is used for calculating and managing various habit attributes such as streaks, completion dates, and habit statuses.
 HabitDB Class
@@ -25,6 +27,8 @@ Requirmnest:
 pip install -r requirements.txt
 to use the app 
 python cli.py
+you can have up to 25 cmmand to to run 
+create a hait delete a habit and many  to track habit store and analyze your habits 
 
 
 
