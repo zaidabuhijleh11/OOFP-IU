@@ -36,7 +36,6 @@ the help command is included in the CLI so if you dont understand what does a co
 Test instruction : 
 make sure you have installed pytest 
 pip install pytest 
-
 the test are class based meaning you can run the class to test the functality 
 or you can see a small arrow next to the test classes or test manually 
 through  running this in the terminal each a time 
