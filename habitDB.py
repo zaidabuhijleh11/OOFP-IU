@@ -1,6 +1,7 @@
 import sqlite3
 from datetime import datetime
 from habit import Habit
+from Dates_Persistence import delete_dates
 connection = sqlite3.connect("habitDB.db")
 cursor = connection.cursor()
 
@@ -39,9 +40,11 @@ class HabitDB:
     15) update_status_streak(): Updates the streak, broken_count, and status (if streak == duration).
     """
 
-    def __init__(self ):
+    def __init__(self):
         self.connection = sqlite3.connect("habitDB.db")
         self.habit= Habit(name='zaid',period='daily',description='testing',streak=0 ,broken_count=0 , status='incomplete' , created_at= datetime.now().date(), duration=100 , day_week="day" )
+
+
 
     def habit_exists(self, name: str) -> bool:# it's implemented to avoid redundancy
         """  a helper method to check if habit exists in the table
@@ -58,7 +61,6 @@ class HabitDB:
     def create_habit(self, name: str, period: str, description: str, duration: int, day_week: str,created_at=datetime.now().date(), streak: int = 0, broken_count: int = 0, status: str = 'incomplete') -> None:
         """
         Creates a habit and inserts it into the table after validating its parameters.
-
         Args:
             name: Name of the habit.
             period: Period of the habit (daily/weekly).
@@ -69,7 +71,6 @@ class HabitDB:
             streak: Streak of the habit.
             broken_count: How many times the streak was broken.
             status: (completed, incomplete).
-
         Raises:
             ValueError: If the habit does not exist.
             ValueError: If the name is None.
@@ -78,15 +79,11 @@ class HabitDB:
             ValueError: If the duration is None.
             ValueError: If the day_week is None.
             ValueError: If the day_week is invalid.
-
         Description of method:
             After we validate the parameters of the habit and check that the habit does not exist in the table,
             we initialize the connection and insert those parameters into the table.
            There are some parameters that are default for a fresh habit, like streak, broken count, status, and created_at,
-           while others will be provided as input in the CLI.
-"""
-
-
+           while others will be provided as input in the CLI."""
         if name is None:
             raise ValueError("Name is invalid ")
         if period is None:
@@ -127,10 +124,11 @@ class HabitDB:
         with self.connection as connection:
             cursor = connection.cursor()
             if name is None:
-                raise ValueError("Name cannot be None or empty ")
+                raise ValueError("Name not Provided  ")
             if self.habit_exists(name) is False:
-                raise ValueError("Habit not found ")
+                raise ValueError("Habit not found in the database  ")
             cursor.execute("""DELETE FROM habits WHERE name = ?""", (name,))
+            delete_dates(name)
             connection.commit()
 
 
@@ -169,12 +167,13 @@ class HabitDB:
         with self.connection as connection:
             cursor = connection.cursor()
             if name is  None:
-                raise ValueError("Name cannot be None or empty")
+                raise ValueError("Name not Provided ")
             if self.habit_exists(name) is False:
-                raise ValueError("Habit not found ")
+                raise ValueError("Habit not found in the table ")
             cursor.execute("""SELECT streak FROM habits WHERE name = ?""", (name,))
             streak = cursor.fetchone()
-            return streak[0] if streak else []
+            return streak[0] if streak else None
+
 
     def get_broken_count(self, name: str) -> int:
         """fetches the broken count of a habit based on the name
@@ -187,12 +186,12 @@ class HabitDB:
         with self.connection as connection:
             cursor = connection.cursor()
             if name is  None:
-                raise ValueError("Name cannot be None or empty")
+                raise ValueError("Name not Provided ")
             if self.habit_exists(name) is False:
                 raise ValueError("Habit not found ")
             cursor.execute("""SELECT broken_count FROM habits WHERE name = ?""", (name,))
             broken_count = cursor.fetchone()
-            return broken_count[0] if broken_count else []
+            return broken_count[0] if broken_count else None
 
 
     def longest_streak(self) -> int:
@@ -220,12 +219,13 @@ class HabitDB:
         with self.connection as connection:
             cursor = connection.cursor()
             if name is  None:
-                raise ValueError("Name cannot be None or empty")
+                raise ValueError("Name not Provided ")
             if self.habit_exists(name) is False:
                 raise ValueError("Habit not found ")
             cursor.execute(""" SELECT description FROM habits WHERE name = ? """, (name,))
             description = cursor.fetchone()
-            return description[0] if description else []
+            return description[0] if description else None
+
 
     def get_period(self, name: str) -> str:
         """ fetch the description of a habit
@@ -238,12 +238,13 @@ class HabitDB:
         with self.connection as connection:
             cursor = connection.cursor()
             if name is  None:
-                raise ValueError("Name cannot be None or empty")
+                raise ValueError("Name not Provided ")
             if self.habit_exists(name) is False:
                 raise ValueError("Habit not found ")
             cursor.execute(""" SELECT period FROM habits""")
             period = cursor.fetchone()
-            return period[0] if period else []
+            return period[0] if period else None
+
 
     def get_habits(self) -> list[tuple]:
         """ fetches all habits and all info about the habit
@@ -252,14 +253,13 @@ class HabitDB:
            Raises:
                None
             Return:
-                a list of tuples of all habits and its parameters
-           """
+                a list of tuples of all habits and its parameters"""
         with self.connection as connection:
             cursor = connection.cursor()
             cursor.execute(""" SELECT * FROM habits""")
             habits = cursor.fetchall()
+            return habits if habits else []
 
-            return habits[:10] if habits else []
 
     def delete_all_habits(self) -> None:
         """deletes all habits and records from Table """
@@ -267,6 +267,7 @@ class HabitDB:
             cursor = connection.cursor()
             cursor.execute("DELETE FROM habits")
             connection.commit()
+
 
     def update_description(self, name: str,new_desc: str) -> None:
         """ Update the description of a habit
@@ -285,7 +286,7 @@ class HabitDB:
         with self.connection as connection:
             cursor = connection.cursor()
             if name is None:
-                raise ValueError("Name cannot be None or empty")
+                raise ValueError("Name not Provided ")
             if self.habit_exists(name) is False:
                 raise ValueError("Habit not found ")
             if new_desc is None:
@@ -319,7 +320,7 @@ class HabitDB:
         with self.connection as connection:
             cursor = connection.cursor()
             if name is None:
-                raise ValueError("Name cannot be None or empty")
+                raise ValueError("Name not Provided ")
             if self.habit_exists(name) is False:
                 raise ValueError("Habit not found ")
             if duration is None:
@@ -334,7 +335,6 @@ class HabitDB:
                 connection.commit()
             elif period_ == "weekly":
                 cursor.execute("""UPDATE habits SET period = 'daily', duration =?, day_week = ? WHERE name = ? """,(duration, day_week, name))
-
                 connection.commit()
 
 
@@ -360,7 +360,7 @@ class HabitDB:
             cursor = connection.cursor()
             curr_streak, broken_count = self.habit.streak_calculations(name)
             if name is None:
-                raise ValueError("Name cannot be None or empty")
+                raise ValueError("Name not Provided ")
             if self.habit_exists(name) is False:
                 raise ValueError("Habit not found ")
             cursor.execute(""" SELECT duration FROM habits WHERE name = ?""", (name,))
