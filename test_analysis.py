@@ -1,10 +1,10 @@
-from datetime import datetime , date
+from datetime import datetime 
 from habit import Habit
 from habitDB import HabitDB
 import pytest
 from analysis import get_most_consistent_habits, get_most_struggled_habits, get_daily_habits, get_weekly_habits , calculate_completion_rate
 import pickle
-from Dates_Persistence import  save_dates , load_dates
+from Dates_Persistence import  save_dates
 
 class TestAnalysis:
 
@@ -116,5 +116,4 @@ class TestAnalysis:
         rate2 = calculate_completion_rate(db)
         assert rate2== '50.0%'
         assert rate1 != rate2
-
 
