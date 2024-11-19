@@ -35,7 +35,8 @@ class CLI:
             print("22. View daily habits")
             print("23. Generate a progress report")
             print("24. completed dates of a habit ")
-            print("25.exit")
+            print("25. help")
+            print('26. exit ')
             choice = input("Choose an option: ").strip()
 
             if choice == "1":
@@ -126,7 +127,7 @@ class CLI:
 
             elif choice == "18":
                 visualization_performance_for_a_habit(self.db)
-                print("Successfully visualized the performance.")
+
 
             elif choice == "19":
                 consistency = int(input("how many broken counts to consider a habit is consistent:"))
@@ -156,8 +157,35 @@ class CLI:
                 if self.db.habit_exists(name):
                     print(f"Completed dates of {name}:{load_dates(name)}")
 
+            elif choice == '25':
+                 print('1) Create a habit and insert it into the Database')
+                 print('2) Delete a habit from the Database')
+                 print('3) Append the date of the day to the list of completed dates indicating that you\'re done with your habit today')
+                 print('4) Get the streak of a habit')
+                 print('5) Get the broken streak count of a habit')
+                 print('6) Present you with all habits that are completed')
+                 print('7) Present you with all habits that are still in progress')
+                 print('8) Longest streak of all incomplete habits')
+                 print('9) Get the description of a habit')
+                 print('10) Get the period of a habit')
+                 print('11) Get all habits saved in the Database')
+                 print('12) Delete everything in the table')
+                 print('13) Update period of a habit and duration')
+                 print('14) Update the description')
+                 print('15) Update the streak in the Database')
+                 print('16) Get the longest streak of a habit in its history')
+                 print('17) Calculate the percentage of how many habits you have completed')
+                 print('18) Visualization of habits in stem graph against their streaks')
+                 print('19) Get the most consistent habits based on broken streak count')
+                 print('20) Get the most inconsistent habits')
+                 print('21) Get all weekly habits')
+                 print('22) Get all daily habits')
+                 print('23) Generate a progress report')
+                 print('24) Present you with the completed dates of a habit')
+                 print('25) Help command')
+                 print('26) Exit')
 
-            elif choice == "25":
+            elif choice == "26":
                 print("Exiting...")
                 break
 
