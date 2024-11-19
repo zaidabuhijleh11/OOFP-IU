@@ -48,6 +48,8 @@ def get_most_consistent_habits(db: HabitDB, consistency: int) -> list:
     habits = [name[0] for name in db.get_habits()]
     if not habits:
         raise ValueError("No habits found")
+    if consistency is None:
+        raise ValueError("consistency threshold not provided ")
     result = list(map(lambda name: (name, db.get_broken_count(name)), habits))
     sorted_result = sorted(result, key=lambda x: x[1])
     return [name for name, broken_count in sorted_result if broken_count <= consistency]
@@ -117,16 +119,10 @@ def calculate_completion_rate(db: HabitDB) -> str:
 
 
 def report(db: HabitDB, consistency: int, inconsistency: int) -> dict:
-    """Generate a habit progress report
-    Args:
-       db: HabitDB instance
-       consistency: a consistency thershold 
-       inconsistency : inconsistency thershold 
-    Raises: 
-        None 
+    """Generate a habit progress report 
+    Args: consistency , inconsistency 
     Return : 
-       dict
-       """
+       dict """
     return {
         "all habits": db.get_habits(),
         'most consistent habit': get_most_consistent_habits(db, consistency),
