@@ -1,4 +1,5 @@
 import pickle
+
 def save_dates(name, date):
     file_name = f"{name}_dates.pkl"
     try:
@@ -19,3 +20,8 @@ def load_dates(name):
         return done_dates
     except FileNotFoundError:
         return []
+
+def delete_dates(name:str ):
+    file_name= f"{name}_dates.pkl"
+    with open(file_name,'wb') as a:
+        pickle.dump([],a)
