@@ -41,6 +41,7 @@ class HabitDB:
     """
 
     def __init__(self):
+        """initialize connection and a Habit instance """
         self.connection = sqlite3.connect("habitDB.db")
         self.habit= Habit(name='zaid',period='daily',description='testing',streak=0 ,broken_count=0 , status='incomplete' , created_at= datetime.now().date(), duration=100 , day_week="day" )
 
