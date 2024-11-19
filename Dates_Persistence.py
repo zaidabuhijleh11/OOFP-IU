@@ -1,6 +1,10 @@
 import pickle
 
-def save_dates(name, date):
+def save_dates(name:str, date)->None :
+    """Save dates in the files 
+    Args: 
+       name (str):name of the habit
+       date (datetime object) : date that you want to add """
     file_name = f"{name}_dates.pkl"
     try:
         with open(file_name, 'rb') as file:
@@ -12,7 +16,10 @@ def save_dates(name, date):
         pickle.dump(done_dates, file)
 
 
-def load_dates(name):
+def load_dates(name:str) -> list:
+    """Load dates
+    Args: 
+        name(str) : name of the habit"""
     file_name = f"{name}_dates.pkl"
     try:
         with open(file_name, 'rb') as file:
