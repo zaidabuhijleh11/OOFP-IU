@@ -1,14 +1,15 @@
 OOFP-IU - Habit Tracker
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Welcome to My Project
 OOFP-IU is a backend habit tracking application that helps users track their habits and transform bad habits into good ones. It offers features like calculating streaks, identifying the most consistent and most struggled habits, and generating habit reports.
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Project Overview
 This app allows users to manage their habits efficiently by:
 Tracking the streaks and longest streaks of their habits.
 genrating a report of progress 
 Providing the ability to visualize and review habit progress.
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
+saving data in a smooth way. 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Project Structure
 Dates_Presistance
 using pickle we will save completed dates as dattime objects inside of the files and load them as objects too
@@ -22,7 +23,7 @@ CLI Class
 The CLI class provides a command-line interface with a wide range of commands that allow users to interact with the program, manage their habits, and view their progress.
 TESTS
 ensuring everything works as expected using pytest  
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 How to Use
 Installation:
 git clone https://github.com/zaidabuhijleh11/OOFP-IU.git
@@ -32,7 +33,7 @@ to use the app
 python CLI.py
 after running this a menu will apear in the consol you can choose any command you like 
 the help command is included in the CLI so if you dont understand what does a command do you can see a description of it 
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Test instruction : 
 make sure you have installed pytest 
 pip install pytest 
@@ -42,7 +43,7 @@ through  running this in the terminal each a time
 pytest test_Habit.py  
 pytest test_habitdb.py
 pytest test_analysis.py
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
  
 
 
