@@ -1,9 +1,9 @@
-from datetime import  datetime ,date
+from datetime import  datetime
 import pytest
 from habitDB import HabitDB
 from habit import Habit
 import pickle
-from Dates_Persistence import save_dates , load_dates
+from Dates_Persistence import save_dates
 
 class TestHabitDB:
 
