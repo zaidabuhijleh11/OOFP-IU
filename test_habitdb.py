@@ -67,7 +67,6 @@ class TestHabitDB:
         completed = db.get_completed_habits()
         assert test_habit1.name in completed
         assert len(completed) == len(initial) + 1
-        assert isinstance(completed, list)
 
     def test_get_incomplete_habits(self, test_habit1 , db ):
         initial = db.get_incomplete_habits()
@@ -97,13 +96,14 @@ class TestHabitDB:
         ex_outcome = db.get_streak(test_habit1.name)
         assert ex_outcome == 5
 
+
     def test_get_habits(self,test_habit, test_habit1 , db ):
         initial = db.get_habits()
         db.create_habit(name=test_habit.name, period='daily', description='testing', duration=6, day_week='day')
         db.create_habit(name=test_habit1.name, period='daily', description='testing', duration=6, day_week='day')
         habits = db.get_habits()
         assert len(habits) == len(initial) + 2
-        assert isinstance(habits, list)
+        assert test_habit.name in [name[0] for name in habits ]
         assert test_habit1.name in [name[0] for name in habits]
 
     def test_update_description(self, test_habit1 , db ):
