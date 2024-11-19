@@ -7,6 +7,7 @@ import pickle
 from Dates_Persistence import  save_dates , load_dates
 
 class TestAnalysis:
+
     @pytest.fixture
     def test_habit(self):
         test_habit = Habit(name='zaidabuhijleh', period='daily', description='testing', streak=0, broken_count=0,
@@ -115,4 +116,5 @@ class TestAnalysis:
         rate2 = calculate_completion_rate(db)
         assert rate2== '50.0%'
         assert rate1 != rate2
+
 
