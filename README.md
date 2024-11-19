@@ -20,20 +20,34 @@ Analysis
 This module contains functions for analyzing habits, calculating streaks, and generating reports. It also identifies the most consistent and most struggled habits based on the tracked data.
 CLI Class
 The CLI class provides a command-line interface with a wide range of commands that allow users to interact with the program, manage their habits, and view their progress.
-tests 
+TESTS: ensuring everything works as expected 
 
+
+
+How to Use
 Installation:
 git clone https://github.com/zaidabuhijleh11/OOFP-IU.git
 Requirmnest:
 pip install -r requirements.txt
-
-
 to use the app 
-python cli.py
-you can have up to 25 command to to run 
-create a hait delete a habit and many  to track habit store and analyze your habits 
+python CLI.py
+after running this a menu will apear in the consol you can choose any command you like 
+the help command is included in the CLI so if you dont understand what does a command do you can see a description of it 
 
-HOW TO USE
+Test instruction : 
+make sure you have installed pytest 
+pip install pytest 
+
+the test are class based meaning you can run the class to test the functality 
+or you can see a small arrow next to the test classes or test manually 
+through  running this in the terminal each a time 
+pytest test_Habit.py  
+pytest test_habitdb.py
+pytest test_analysis.py
+
+ 
+
+
 
 
 
