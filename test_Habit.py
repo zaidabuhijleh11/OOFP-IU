@@ -20,6 +20,7 @@ class TestHabit:
         db.delete_all_habits()
         yield
         db.delete_all_habits()
+
     @pytest.fixture(autouse=True)
     def clean_pickle_files(self):
         with open('zaid_dates.pkl', 'wb') as file:
@@ -75,4 +76,6 @@ class TestHabit:
         save_dates(test_habit1.name, datetime(2024, 10, 15).date())
         ex_outcome = test_habit1.longest_run_streak_for_a_given_habit(test_habit1.name)
         assert ex_outcome == 7
+
+
 
