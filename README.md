@@ -39,6 +39,7 @@ make sure you have installed pytest
 pip install pytest 
 the test are class based meaning you can run the class to test the functality 
 or you can see a small arrow next to the test classes 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test manually through  running this in the terminal each a time 
 pytest test_Habit.py  
 pytest test_habitdb.py
