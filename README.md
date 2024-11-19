@@ -12,19 +12,24 @@ Providing the ability to visualize and review habit progress.
 saving data in a smooth way. 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Project Structure
-
 Dates_Presistance
 using pickle we will save completed dates as dattime objects inside of the files and load them as objects too
+
 Habit Class
 The Habit class is used for calculating and managing completed dates for calcualtions like streak and longest streak run .
+
 HabitDB Class
 The HabitDB class handles the storage and retrieval of habit data using SQLite3. It provides functions for CRUD operations and managing habit data efficiently.
+
 Analysis
 This module contains functions for analyzing habits, graphing habits , and generating reports. It also identifies the most consistent and most struggled habits based on the tracked data.
+
 CLI Class
 The CLI class provides a command-line interface with a wide range of commands that allow users to interact with the program, manage their habits, and view their progress.
+
 TESTS
 ensuring everything works as expected using pytest  
+
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 How to Use
 
