@@ -4,6 +4,7 @@ Welcome to My Project
 OOFP-IU is a backend habit tracking application that helps users track their habits and transform bad habits into good ones. It offers features like calculating streaks, identifying the most consistent and most struggled habits, and generating habit reports.
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Project Overview
+
 This app allows users to manage their habits efficiently by:
 Tracking the streaks and longest streaks of their habits.
 genrating a report of progress 
@@ -11,6 +12,7 @@ Providing the ability to visualize and review habit progress.
 saving data in a smooth way. 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Project Structure
+
 Dates_Presistance
 using pickle we will save completed dates as dattime objects inside of the files and load them as objects too
 Habit Class
@@ -25,6 +27,7 @@ TESTS
 ensuring everything works as expected using pytest  
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 How to Use
+
 Installation:
 git clone https://github.com/zaidabuhijleh11/OOFP-IU.git
 Requirmnest:
@@ -35,12 +38,14 @@ after running this a menu will apear in the consol you can choose any command yo
 the help command is included in the CLI so if you dont understand what does a command do you can see a description of it 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Test instruction : 
+
 make sure you have installed pytest 
 pip install pytest 
 the test are class based meaning you can run the class to test the functality 
 or you can see a small arrow next to the test classes 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 test manually through  running this in the terminal each a time 
+
 pytest test_Habit.py  
 pytest test_habitdb.py
 pytest test_analysis.py
