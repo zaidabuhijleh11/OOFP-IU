@@ -119,10 +119,7 @@ def calculate_completion_rate(db: HabitDB) -> str:
 
 
 def report(db: HabitDB, consistency: int, inconsistency: int) -> dict:
-    """Generate a habit progress report 
-    Args: consistency , inconsistency 
-    Return : 
-       dict """
+    """Generate a habit progress report"""
     return {
         "all habits": db.get_habits(),
         'most consistent habit': get_most_consistent_habits(db, consistency),
