@@ -262,12 +262,15 @@ class HabitDB:
             return habits if habits else []
 
 
-    def delete_all_habits(self) -> None:
+       def delete_all_habits(self) -> None:
         """deletes all habits and records from Table """
         with self.connection as connection:
             cursor = connection.cursor()
+            for habit in [habit[0] for habit in self.get_habits()]: # deletes the dates before deleting habit records
+                delete_dates(habit)
             cursor.execute("DELETE FROM habits")
             connection.commit()
+
 
 
     def update_description(self, name: str,new_desc: str) -> None:
