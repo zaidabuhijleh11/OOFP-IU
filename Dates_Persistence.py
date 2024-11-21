@@ -28,7 +28,7 @@ def load_dates(name:str) -> list:
     except FileNotFoundError:
         return []
 
-def delete_dates(name:str ):
+def delete_dates(name:str )->None :
     file_name= f"{name}_dates.pkl"
     with open(file_name,'wb') as a:
         pickle.dump([],a)
