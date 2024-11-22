@@ -29,6 +29,16 @@ def load_dates(name:str) -> list:
         return []
 
 def delete_dates(name:str )->None :
+    """Delete the file contents  if the habit got deleted so if the user want to create
+    the same habit later  he will not have an issue
+    Args:
+       name:(str) name of the habit 
+    Raises:
+       None 
+    
+    Return:
+      None 
+    """
     file_name= f"{name}_dates.pkl"
     with open(file_name,'wb') as a:
         pickle.dump([],a)
