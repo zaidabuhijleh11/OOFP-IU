@@ -1,7 +1,7 @@
 import sqlite3
 from datetime import datetime
 from habit import Habit
-from Dates_Persistence import delete_dates
+from Dates_Persistence import delete_dates,create_file
 connection = sqlite3.connect("habitDB.db")
 cursor = connection.cursor()
 
@@ -20,6 +20,7 @@ connection.commit()
 
 
 class HabitDB:
+
     """
     Class for Habit Management, Data Retrieval, and Storage.
     Methods:
@@ -107,6 +108,7 @@ class HabitDB:
                 """INSERT INTO habits(name , period , description , streak,created_at , status , broken_count,duration, day_week) VALUES (?,?,?,?,?,?,?,?,?)""",
                 (name, period, description, streak, created_at, status, broken_count, duration, day_week))
             connection.commit()
+            create_file(name)
 
 
 
@@ -129,8 +131,8 @@ class HabitDB:
             if self.habit_exists(name) is False:
                 raise ValueError("Habit not found in the database  ")
             cursor.execute("""DELETE FROM habits WHERE name = ?""", (name,))
-            delete_dates(name)
             connection.commit()
+            delete_dates(name)
 
 
 
@@ -262,7 +264,7 @@ class HabitDB:
             return habits if habits else []
 
 
-       def delete_all_habits(self) -> None:
+    def delete_all_habits(self) -> None:
         """deletes all habits and records from Table """
         with self.connection as connection:
             cursor = connection.cursor()
@@ -270,7 +272,6 @@ class HabitDB:
                 delete_dates(habit)
             cursor.execute("DELETE FROM habits")
             connection.commit()
-
 
 
     def update_description(self, name: str,new_desc: str) -> None:
