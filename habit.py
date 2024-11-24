@@ -9,6 +9,7 @@ class Habit:
         streak_calculations(): Calculates the streak of a habit and the broken streak count.
         longest_streak_run_for_a_given_habit(): Calculates the longest streak run for a given habit."""
     def __init__(self, name: str, period: str, description: str, streak: int, broken_count: int, status: str,created_at, duration: int = None, day_week: str = None):
+
         """
         Args:
             name (str): Name of the habit.
@@ -18,6 +19,7 @@ class Habit:
             broken_count (int): Number of times the streak was broken.
             status (str): Status of the habit, e.g., "completed" or "incomplete".
             created_at (date): The date when the habit was created."""
+
         self.name = name
         self.period = period
         self.description = description
@@ -27,7 +29,9 @@ class Habit:
 
 
 
-    def habit_is_done_today(self, name: str = None) -> None:
+
+
+    def habit_is_done_today(self, name: str ) -> None:
         """Append the date of the day if the user has completed their habit.
         Args:
             name (str): Name of the habit.
@@ -40,7 +44,8 @@ class Habit:
             After validating that the name is provided and exists, the current date is appended to the list of completed dates,
             after checking that the date does not exist."""
         from habitDB import HabitDB
-        db =HabitDB()
+        db = HabitDB()
+
         if name is None:
             raise ValueError("Habit name is not provided ")
         if db.habit_exists(name):
@@ -62,6 +67,9 @@ class Habit:
             We validate the name of the habit and after that we call to get the completed dates to do streak and broken count calculations
             this is done by looping over the date and checking if they are consecutive if they are we +1 to the streak and if the dates are not
             we set streak to 0 and broken count +1"""
+        from habitDB import HabitDB
+        db = HabitDB()
+
         if name is None:
             raise ValueError("name is not provided ")
         dates = sorted(load_dates(name))
@@ -71,13 +79,13 @@ class Habit:
         curr_streak = 1 if len(dates) == 1 else 0
         for x in range(1, len(dates)):
             difference = (dates[x] - dates[x - 1]).days
-            if self.period == "daily":
+            if db.get_period(name) == "daily":
                 if difference == 1:
                     curr_streak += 1
                 else:  # if dates are not consecutive set streak to zero and plus one to broken_count
                     broken_count += 1
                     curr_streak = 0
-            if self.period == "weekly":
+            elif db.get_period(name) == "weekly":
                 if difference == 7:
                     curr_streak += 1
                 else:
@@ -102,12 +110,15 @@ class Habit:
          append them to the list of consecutive dates the moment they are not consecutive append the length of consecutive dates to streak history
          and then start looping over the dates starting from the day the loop ended on , then return the max element in the list (longest streak run)
         """
+        from habitDB import HabitDB
+        db = HabitDB()
+
         if name is None:
             raise ValueError("name is not provided ")
         dates = sorted(load_dates(name))
         streak_history = []
         consecutive_dates = []
-        gap = 1 if self.period == 'daily' else 7  # Daily streak or weekly streak
+        gap = 1 if db.get_period(name) == 'daily' else 7  # Daily streak or weekly streak
         for x in range(1, len(dates)):
             if (dates[x] - dates[x - 1]).days == gap:
                 consecutive_dates.append(dates[x])
@@ -115,6 +126,10 @@ class Habit:
                 streak_history.append(len(consecutive_dates))
                 consecutive_dates = [dates[x]]
         return max(streak_history) if streak_history else 0
+
+
+
+
 
 
 
