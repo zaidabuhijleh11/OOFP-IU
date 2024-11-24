@@ -2,7 +2,7 @@ from datetime import datetime
 from habit import Habit
 from habitDB import HabitDB
 from analysis import get_most_consistent_habits, get_most_struggled_habits, get_daily_habits, get_weekly_habits , calculate_completion_rate , visualization_performance_for_a_habit,report
-from Dates_Persistence import load_dates ,save_dates
+from Dates_Persistence import load_dates
 class CLI:
     def __init__(self):
         self.db = HabitDB()
@@ -158,6 +158,7 @@ class CLI:
                     print(f"Completed dates of {name}:{load_dates(name)}")
 
             elif choice == '25':
+
                  print('1) Create a habit and insert it into the Database')
                  print('2) Delete a habit from the Database')
                  print('3) Append the date of the day to the list of completed dates indicating that you\'re done with your habit today')
@@ -199,3 +200,4 @@ class CLI:
 if __name__ == "__main__":
     cli = CLI()
     cli.run()
+
