@@ -37,7 +37,7 @@ class CLI:
             print("24. completed dates of a habit ")
             print("25. help")
             print('26. exit ')
-            choice = input("Choose an option: ").strip()
+            choice = int(input("Choose an option: ").strip())
 
             if choice == "1":
                 name = input("Enter habit name: ").strip()
