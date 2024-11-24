@@ -140,3 +140,4 @@ def visualization_performance_for_a_habit(db: HabitDB):
     plt.title("User habits Performance")
     plt.tight_layout()
     plt.show()
+
