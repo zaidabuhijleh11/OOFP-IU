@@ -4,3 +4,4 @@ datetime==5.5
 sqlite3==3.45.1
 matplotlib==3.9.2
 pickle ==3.12
+os==3.12
