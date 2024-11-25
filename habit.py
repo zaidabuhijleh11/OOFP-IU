@@ -4,7 +4,6 @@ class Habit:
     """
     Represents a Class for Habit Management and Important Calculations.
     Methods:
-        get_habit_objects(): Converts habit data into Habit objects.
         habit_is_done_today(): Appends the date when the user has completed their habit today.
         streak_calculations(): Calculates the streak of a habit and the broken streak count.
         longest_streak_run_for_a_given_habit(): Calculates the longest streak run for a given habit."""
@@ -126,12 +125,5 @@ class Habit:
                 streak_history.append(len(consecutive_dates))
                 consecutive_dates = [dates[x]]
         return max(streak_history) if streak_history else 0
-
-
-
-
-
-
-
 
 
