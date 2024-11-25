@@ -46,7 +46,7 @@ class CLI:
                 duration = int(input("Enter duration: "))
                 day_week = input("Enter 'day' or 'week': ").strip()
                 self.db.create_habit(name, period, description, duration, day_week)
-                print(f"Successfully created the habit {name} and saved into the DataBase .")
+                print(f"Successfully created the habit {name} and saved into the db .")
 
             elif choice == "2":
                 name = input("Enter the name of the habit to delete: ").strip()
