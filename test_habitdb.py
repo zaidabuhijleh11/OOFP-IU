@@ -258,4 +258,3 @@ class TestHabitDB:
         db.delete_all_habits()
         with pytest.raises(ValueError):
             db.update_status_streak( test_habit1.name)
-
