@@ -182,7 +182,7 @@ class HabitDB:
         """fetches the broken count of a habit based on the name
         Arg:
            name(str): of the habit
-        Raises : 
+        Raises :
             ValueError if the name of the habit does not exist
             ValueError if the Habit  does not exist
         Return:
