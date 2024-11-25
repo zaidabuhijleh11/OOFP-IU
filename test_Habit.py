@@ -139,3 +139,4 @@ class TestHabit:
         test_habit1.habit_is_done_today(test_habit1.name )
         with pytest.raises(ValueError):
             test_habit1.habit_is_done_today(test_habit1.name )
+            
