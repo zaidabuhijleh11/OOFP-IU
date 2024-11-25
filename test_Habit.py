@@ -114,7 +114,7 @@ class TestHabit:
         ex_outcome = test_habit1.longest_run_streak_for_a_given_habit(test_habit1.name)
         assert ex_outcome == 7
 
-# test edge cases : (empty dates , only 1 date , duplication   )
+# test edge cases : (empty dates, 1 date only, duplication   )
     def test_streak_cal_for_empty_dates_list(self, test_habit1, db):
         """test streak calculations with an empty completed dates list  """
         db.create_habit(name=test_habit1.name, period=test_habit1.period, description=test_habit1.description,duration=100, day_week='day')
@@ -139,6 +139,7 @@ class TestHabit:
         test_habit1.habit_is_done_today(test_habit1.name )
         with pytest.raises(ValueError):
             test_habit1.habit_is_done_today(test_habit1.name )
+
 
 
 
