@@ -140,3 +140,5 @@ class TestAnalysis:
         rate2 = calculate_completion_rate(db)#50%
         assert rate2== '50.0%'
         assert rate1 != rate2
+
+
