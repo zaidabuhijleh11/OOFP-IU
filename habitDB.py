@@ -181,9 +181,10 @@ class HabitDB:
     def get_broken_count(self, name: str) -> int:
         """fetches the broken count of a habit based on the name
         Arg:
-           name of the habit
-        Raises : ValueError if the name of the habit does not exist
-                 ValueError if the Habit  does not exist
+           name(str): of the habit
+        Raises : 
+            ValueError if the name of the habit does not exist
+            ValueError if the Habit  does not exist
         Return:
              int demonstrating the broken streak count of a habit """
         with self.connection as connection:
@@ -229,7 +230,6 @@ class HabitDB:
             description = cursor.fetchone()
             return description[0] if description else None
 
-
     def get_period(self, name: str) -> str:
         """ fetch the description of a habit
             Args:
@@ -247,7 +247,6 @@ class HabitDB:
             cursor.execute(""" SELECT period FROM habits""")
             period = cursor.fetchone()
             return period[0] if period else None
-
 
     def get_habits(self) -> list[tuple]:
         """ fetches all habits and all info about the habit
@@ -286,9 +285,7 @@ class HabitDB:
             ValueError if the new description is not provided
             ValueError if the habit does not exist
         Return :
-           returns nothing only updates value in the table
-"""
-
+           returns nothing only updates value in the table"""
         with self.connection as connection:
             cursor = connection.cursor()
             if name is None:
