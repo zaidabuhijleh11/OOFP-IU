@@ -36,7 +36,7 @@ def load_dates(name: str):
 def delete_dates(name: str):
     file_name = f"{name}_dates.pkl"
     if os.path.exists(file_name):
-        os.remove(file_name)  # Deletes the file
+        os.remove(file_name)
         print(f"File {file_name} has been deleted.")
     else:
         print(f"File {file_name} does not exist.")
