@@ -84,3 +84,4 @@ class TestPerformance:
         db.update_status_streak(test_habit1.name)
         completed = db.get_completed_habits()
         assert test_habit1.name in completed
+
